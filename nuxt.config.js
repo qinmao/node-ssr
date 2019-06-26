@@ -31,9 +31,10 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: {
-    color: '#fff'
-  },
+  // loading: {
+  //   color: '#fff'
+  // },
+  loading: false,
   /*
    ** Global CSS
    */
@@ -53,6 +54,7 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    '@nuxtjs/style-resources',
     // 配置选项
     // 缓存使用条件：
     // 可缓存组件必须定义唯一 name 选项。
@@ -64,6 +66,10 @@ module.exports = {
       maxAge: 1000 * 60 * 60
     }]
   ],
+  // 在页面中注入一些变量和mixin而不必每次都导入它们
+  styleResources: {
+    scss: './assets/var.scss',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -87,6 +93,13 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, {
+      isClient
+    }) {
+      // 为 客户端打包 进行扩展配置
+      if (isClient) {
+        config.devtool = 'eval-source-map'
+      }
+    }
   }
 }
