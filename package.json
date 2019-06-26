@@ -1,7 +1,7 @@
 {
   "name": "node-ssr",
   "version": "1.0.0",
-  "description": "My grand Nuxt.js project",
+  "description": "Nuxt.js ssr",
   "author": "心太软",
   "private": true,
   "scripts": {
