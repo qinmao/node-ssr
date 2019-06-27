@@ -11,6 +11,7 @@
     "start": "cross-env NODE_ENV=production node server/index.js",
     "setup": "pm2 deploy production setup",
     "deploy:local": "npm run build && npm start",
+    "deploy:dev": "pm2 deploy development update",
     "deploy:prod": "pm2 deploy production update",
     "generate": "nuxt generate"
   },
