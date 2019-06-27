@@ -26,13 +26,6 @@ module.exports = {
       'post-deploy' : 'npm i && npm run build && pm2 reload ecosystem.config.js --env production'
     },
     development: {
-      user : 'root',
-      host : ['39.96.190.20'],
-      ssh_options: "StrictHostKeyChecking=no",
-      ref  : 'origin/dev',
-      repo : 'git@github.com:qinmao/node-ssr.git',
-      path : '/var/www/node-ssr',
-      'post-deploy' : 'npm i && npm run build && pm2 reload ecosystem.config.js --env development'
     }
   }
 };

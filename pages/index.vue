@@ -3,7 +3,7 @@
     <div>
       <Logo/>
       <h1 class="title">node-ssr</h1>
-      <h2 class="subtitle">My grand Nuxt.js project</h2>
+      <h2 class="subtitle">{{name}}</h2>
     </div>
   </div>
 </template>
@@ -12,6 +12,17 @@
 import Logo from "~/components/Logo.vue";
 
 export default {
+  data () {
+    return {
+      name:''
+    }
+  },
+ async mounted () {
+    let res=await this.$axios.get('/getUser')
+    if(res.code===200){
+      this.name=res.data.name
+    }
+  },
   components: {
     Logo
   }

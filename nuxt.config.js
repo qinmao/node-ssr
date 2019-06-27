@@ -31,9 +31,6 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  // loading: {
-  //   color: '#fff'
-  // },
   loading: false,
   /*
    ** Global CSS
@@ -45,7 +42,8 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/axios'
   ],
   /*
    ** Nuxt.js modules
@@ -53,7 +51,6 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     '@nuxtjs/style-resources',
     // 配置选项
     // 缓存使用条件：
@@ -66,8 +63,8 @@ module.exports = {
       maxAge: 1000 * 60 * 60
     }]
   ],
-  // 在页面中注入一些变量和mixin而不必每次都导入它们
   styleResources: {
+    // 在页面中注入一些变量和mixin而不必每次都导入它们
     scss: './assets/var.scss',
   },
   /*
@@ -75,31 +72,42 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    proxy: true
+    proxy: true,
+    credentials: true,
+    // baseURL and proxy doesn't work together, you need to use prefix instead.
+    baseURL: '/api',
+    prefix: '/api'
   },
   proxy: {
     '/api': {
-      target: 'http://example.com',
-      pathRewrite: {
-        '^/api': '/'
-      }
+      target: 'http://39.96.190.20:3000',
+      changeOrigin: true
+      // pathRewrite: {
+      //   '^/api': '/'
+      // }
     }
   },
   /*
    ** Build configuration
    */
   build: {
+    babel: {
+      "plugins": [
+        [
+          "component",
+          {
+            "libraryName": "element-ui",
+            "styleLibraryName": "theme-chalk"
+          }
+        ]
+      ]
+    },
     transpile: [/^element-ui/],
     /*
      ** You can extend webpack config here
      */
-    extend(config, {
-      isClient
-    }) {
-      // 为 客户端打包 进行扩展配置
-      if (isClient) {
-        config.devtool = 'eval-source-map'
-      }
+    extend(config, ctx) {
+
     }
   }
 }
